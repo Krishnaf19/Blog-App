@@ -13,21 +13,23 @@ export default function Post() {
 
     const userData = useSelector((state) => state.auth.userData);
 
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
-
-    console.log("Post:", post);
-console.log("Redux userData:", userData);
-console.log("post.userId:", post?.userId);
-console.log("userData.$id:", userData?.$id);
-console.log("isAuthor:", isAuthor);
+    const isAuthor =
+        post && userData
+            ? post.userId === userData.$id
+            : false;
 
     useEffect(() => {
         if (slug) {
             service.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
+                if (post) {
+                    setPost(post);
+                } else {
+                    navigate("/");
+                }
             });
-        } else navigate("/");
+        } else {
+            navigate("/");
+        }
     }, [slug, navigate]);
 
     const deletePost = () => {
@@ -40,34 +42,52 @@ console.log("isAuthor:", isAuthor);
     };
 
     return post ? (
-        <div className="py-8">
+        <div className="min-h-screen py-12">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+
+
+                <div className="relative overflow-hidden rounded-3xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-xl p-4 mb-8">
+
                     <img
                         src={bucket.getFilePreview(post.featuredImage)}
                         alt={post.title}
-                        className="rounded-xl"
+                        className="w-full h-[600px] rounded-2xl object-cover]"
                     />
 
                     {isAuthor && (
-                        <div className="absolute right-6 top-6">
+                        <div className="absolute top-6 right-6 flex gap-3">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <button
+                                    className="px-5 py-2 rounded-xl bg-emerald-500/60 backdrop-blur-md text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg
+                                "
+                                >
                                     Edit
-                                </Button>
+                                </button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+
+                            <button
+                                onClick={deletePost}
+                                className="px-5 py-2 rounded-xl bg-red-500/60 backdrop-blur-md text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg
+                            "
+                            >
                                 Delete
-                            </Button>
+                            </button>
                         </div>
                     )}
                 </div>
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
+
+                <div >
+                    <h1 className="text-4xl md:text-5xl font-bold text-black">
+                        {post.title}
+                    </h1>
+
+                    <div className="mt-4 h-[1px] w-full bg-white/20"></div>
                 </div>
-                <div className="browser-css">
+
+                <div className="">
                     {parse(post.content)}
-                    </div>
+                </div>
+
             </Container>
         </div>
     ) : null;
