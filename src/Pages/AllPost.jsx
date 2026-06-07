@@ -20,7 +20,7 @@ function AllPosts() {
 
   return (
     <div className="w-full bg-white min-h-screen">
-      {/* Hero Section */}
+     
       <div className="relative bg-gradient-to-r from-blue-600 to-blue-400 py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-700/50 to-blue-500/30"></div>
 
@@ -36,13 +36,13 @@ function AllPosts() {
         <Container>
          
           <div className="mb-12">
-            <div className="max-w-md glass-card p-4 border border-white/25">
+            <div className="max-w-md glass-card p-2 border-2 border-black">
               <input
                 type="text"
                 placeholder="Search articles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-5 py-3 rounded-lg text-gray-900 placeholder-gray-600 focus:outline-none shadow-lg glass-input"
+                className="w-full px-5 py-2 rounded-lg text-gray-900 placeholder-gray-600 focus:outline-none shadow-sm border-blue/20 glass-input"
               />
             </div>
           </div>

@@ -3,13 +3,25 @@ import React from "react";
 export default function Button({
     children,
     type = "button",
-    bgColor = "bg-gradient-to-r from-blue-600 to-blue-700",
-    textColor = "text-white",
-    className = "cursor-pointer",
+    className = "",
     ...props
 }) {
     return (
-        <button className={`px-6 py-3 rounded-lg font-semibold ${bgColor} ${textColor} ${className} transition-all duration-300 hover:shadow-lg hover:scale-105 transform active:scale-95`} {...props}>
+        <button
+            type={type}
+            className={`
+                px-6 py-3 rounded-xl
+                font-semibold text-white
+                bg-blue-700/80
+                shadow-lg shadow-blue-700/20
+                transition-all duration-300
+                hover:bg-blue-700/60
+                hover:scale-102
+            
+                ${className}
+            `}
+            {...props}
+        >
             {children}
         </button>
     );

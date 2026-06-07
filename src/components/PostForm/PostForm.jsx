@@ -52,16 +52,25 @@ export default function PostForm({ post }) {
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
+          
+            if (!userData?.$id) {
+                navigate('/login');
+                return;
+            }
+
             const file = await bucket.uploadFile(data.image[0]);
 
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
-                const dbPost = await service.createPost({ ...data, userId: userData.$id });
+            const dbPost = await service.createPost({ ...data, userId: userData.$id });
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
                 }
+
+                // Ensure next render uses the same document id/fields
+                // (userId is required by the collection schema).
             }
         }
     };
