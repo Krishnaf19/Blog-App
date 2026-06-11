@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 function Home() {
+
   const [posts, setPosts] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
   const authStatus = useSelector((state) => state.auth.status)
 
   useEffect(() => {
@@ -17,14 +17,26 @@ function Home() {
     })
   }, [])
 
-  const filteredPosts = posts.filter((post) =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  if (posts.length === 0) {
+    return (
+      <div className="w-full py-8 mt-4 text-center">
+        <Container>
+          <div className="flex flex-wrap">
+            <div className="p-2 w-full">
+              <h1 className="text-2xl font-bold hover:text-gray-500">
+                Login to read posts
+              </h1>
+            </div>
+          </div>
+        </Container>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full bg-gradient-to-b from-blue-50/40 via-white to-white min-h-screen">
 
-      <div className="relative w-full h-90 md:h-120 bg-gradient-to-r from-indigo-600 to-cyan-600 overflow-hidden group">
+      <div className="relative w-full h-90 md:h-120 bg-gradient-to-r from-indigo-600 to-cyan-600 overflow-hidden group pt-8">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{
@@ -46,23 +58,7 @@ function Home() {
                 Explore our collection of inspiring articles and creative content
               </p>
 
-          
-              <div className="flex gap-3 mb-6">
-                <div className="flex-1 max-w-md">
-                  <input
-                    type="text"
-                    placeholder="Search articles..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-5 py-3 rounded-lg text-white placeholder-white focus:outline-none shadow-lg glass-input"
-                  />
-                </div>
-                <button className="px-8 py-3 bg-white/12 text-white font-semibold rounded-lg hover:bg-white/20 transition-colors duration-300 shadow-lg glass-btn">
-                  Search
-                </button>
-              </div>
 
-         
               <div className="flex gap-4 pt-4 flex-wrap">
                 {authStatus ? (
                   <Link
@@ -92,62 +88,22 @@ function Home() {
         </Container>
       </div>
 
-   
-      {filteredPosts.length > 0 && (
-        <div className="py-20 bg-white">
-          <Container>
-            <div className="mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-                Your Journey Begins Here
-              </h2>
-              <p className="text-lg text-gray-600">Handpicked stories and insights for you</p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post) => (
-                <div
-                  key={post.$id}
-                  className="transform transition-all duration-300 hover:translate-y-(-2)"
-                >
-                  <PostCard {...post} />
-                </div>
-              ))}
-            </div>
-          </Container>
-        </div>
-      )}
+      {/*display card*/}
+      <div className='w-full py-8'>
+        <Container>
+          <div className='flex flex-wrap'>
+            {posts.map((post) => 
+              <div key={post.$id} className='p-2 w-1/4'>
+                <PostCard {...post} />
+              </div>
+            )}
+          </div>
+        </Container>
+      </div>
 
-      
-      {filteredPosts.length === 0 && posts.length === 0 && (
-        <div className="py-32 bg-white">
-          <Container>
-            <div className="text-center">
-              <h3 className="text-3xl font-bold text-gray-900 mb-3">No Articles Yet</h3>
-              <p className="text-lg text-gray-600 mb-10">Be the first to share your story!</p>
-              {authStatus && (
-                <Link
-                  to="/add-post"
-                  className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                >
-                  Create First Article
-                </Link>
-              )}
-            </div>
-          </Container>
-        </div>
-      )}
 
-    
-      {searchTerm && filteredPosts.length === 0 && posts.length > 0 && (
-        <div className="py-32 bg-white">
-          <Container>
-            <div className="text-center">
-              <h3 className="text-3xl font-bold text-gray-900 mb-3">No Results Found</h3>
-              <p className="text-lg text-gray-600">Try searching with different keywords</p>
-            </div>
-          </Container>
-        </div>
-      )}
+
     </div>
   )
 }

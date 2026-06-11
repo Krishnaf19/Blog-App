@@ -117,7 +117,7 @@ function Footer() {
         </div>
 
         <div className="border-t border-gray-400 pt-8 mt-8">
-          <p className="text-sm text-gray-600 text-center">&copy; Copyright 2024. All Rights Reserved by BlogApp. Made with care for creators.</p>
+          <p className="text-sm text-gray-600 text-center">&copy; Copyright 2026. All Rights Reserved by BlogApp.</p>
         </div>
       </div>
     </section>

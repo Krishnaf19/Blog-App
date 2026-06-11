@@ -75,6 +75,8 @@ function Header() {
               ) : null
             )}
 
+
+
             {authStatus ?
               <li className='flex-shrink-0'>
                 <LogoutBtn />
@@ -89,3 +91,34 @@ function Header() {
 }
 
 export default Header
+
+
+{/*Different Way
+        
+          <ul className='flex gap-12 ml-auto flex-wrap items-center justify-end'>
+            {authStatus ? (
+              <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+
+                <li>
+                  <Link to="/add-post">Add Post</Link>
+                </li>
+
+                <li>
+                  <Link to="/all-posts">All Posts</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+
+                <li>
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+              </>
+            )}
+*/}

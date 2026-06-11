@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { login as authLogin } from '../../features/authSlice'
 import { Button, Input, Logo } from "../index"
@@ -13,11 +13,6 @@ function Login() {
   const [error, setError] = useState("")
   const authStatus = useSelector((state) => state.auth.status)
 
-  useEffect(() => {
-    if (authStatus) {
-      navigate("/")
-    }
-  }, [authStatus, navigate])
 
   const login = async (data) => {
     setError("")
@@ -59,7 +54,7 @@ function Login() {
               placeholder="you@example.com"
               type="email"
               autoComplete="email"
-              {...register("email", {
+              {...register("email", {              //register name must be same as type pf input
                 required: true,
                 validate: {
                   matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
